@@ -9,3 +9,5 @@ Step 3: Compile Client.c on your BeagleBone Black including i2cbusses.c (ensure 
 Step 4: Run Server
 Step 5: Run Client
 Step 6: Drive
+
+See http://elinux.org/ECE497_Project:_Xbox_Controller_to_Wild_Thumper for further details
