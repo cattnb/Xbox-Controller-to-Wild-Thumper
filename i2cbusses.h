@@ -25,13 +25,13 @@
 #include <unistd.h>
 
 struct i2c_adap {
-	int nr;
-	char *name;
-	const char *funcs;
-	const char *algo;
+    int nr;
+    char *name;
+    const char *funcs;
+    const char *algo;
 };
 
-struct i2c_adap *gather_i2c_busses(void);
+struct i2c_adap* gather_i2c_busses(void);
 void free_adapters(struct i2c_adap *adapters);
 
 int lookup_i2c_bus(const char *i2cbus_arg);

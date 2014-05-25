@@ -1,0 +1,28 @@
+Greetings!
+
+  This document outlines the axis and button assignments of the Logitech F310
+XBox clone controller.
+
+Axis   :   7
+Buttons:  10
+
+Axis 0: Left JS X
+Axis 1: Left JS Y
+Axis 2: Left Trigger 
+Axis 3: Right JS X
+Axis 4: Right JS Y
+Axis 5: Right Trigger
+Axis 6: D-Pad X
+Axis 7: D-Pad Y
+
+Button  0: A (Green)
+Button  1: B (Red)
+Button  2: X (Blue)
+Button  3: Y (Yellow)
+Button  4: Left Button
+Button  5: Right Button
+Button  6: Back
+Button  7: Start
+Button  8: Mode
+Button  9: Left Stick (push)
+Button 10: Right Stick (push)

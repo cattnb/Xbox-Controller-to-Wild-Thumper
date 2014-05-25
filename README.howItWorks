@@ -1,0 +1,46 @@
+Greetings!
+
+  In this directory you'll find code that implements a Linux robot controller
+and the robot code itself.
+
+  The overall system design is a driver station running Linux connecting
+to a Dagu Wild Thumper robot chassis with a Beaglebone Black relaying the
+TRex robot controller commands via I2C.  The robot is the "server" and it
+is constructed to run as a daemon waiting for a connection from the driver
+station.  If the connection to the driver station is lost, the code should
+safe the robot after 2 seconds and go back to waiting for another driver
+station connection.
+
+  In this version, we're using an Arduino Yun to act as the Wi-Fi access point
+and as the USB camera relay via the mjpegstreamer command on port 8080.  The Yun
+is then connected to the BBB via Ethernet.  It's a kludge, but the BBB seems to
+be having problems with USB reliability in 3.8 and 3.14 Debian builds.  So,
+I didn't have much choice if I wanted to get something functional. 
+
+  Eventually, I want the BBB running openCV so it can use the camera for machine
+vision applications.  But, I haven't gotten that far yet.  If you implement
+something cool, please let us know.
+
+driver_station:
+   This code uses threads to poll the joystick (Logitech XBox lookalike),
+encode the readings into a format compatible with the Dagu TRex robot
+controller and send them across an IP socket to a robot that will relay the
+command sequence to the TRex controller via I2C.  Particular attention is 
+paid to making sure we have resource protection via mutex semaphores when
+we're calculating the left and right motor speeds.  The motor speed updates
+are sent every 50ms ala what we would see in FIRST robotics.
+
+robotd:
+  This is the main code for the robot.  Nothing particularly tricky here
+except for the logic to make the code a daemon.  We set up the I2C bus 
+(selectable via commandline -i parameter, but defaults to bus 2) and then
+set up the socket listener (port is selectable via -p commandline parameter,
+but defaults to 1929).  The listener then waits for a connection and starts
+relaying commands from the driver station to the robot.  
+
+In this version, I'm ignoring the return status from the TRex controller 
+because I don't really have anyplace to send it that would know what to do 
+with it and I wanted to limit the network traffic because of the camera feed.
+
+If the keepalives show the link as dead, then the robot should go to a "safe"
+state and wait for a connection again.
